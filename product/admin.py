@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Variation
+
+
+class VariationInLine(admin.TabularInline):
+    model = Variation
+    extra = 1
 
 
 @admin.register(Product)
@@ -16,3 +21,10 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('name',),
     }
+    inlines = [VariationInLine,]
+
+
+@admin.register(Variation)
+class VariationAdmin(admin.ModelAdmin):
+    list_display = 'id', 'name'
+    list_display_links = 'name', 

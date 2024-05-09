@@ -63,3 +63,17 @@ class Product(models.Model):
             resize_image(self.main_image, 900)
 
         return super().save(*args, **kwargs)
+
+
+class Variation(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=50, blank=True, null=True)
+    price = models.FloatField()
+    promotional_price = models.FloatField(default=0)
+    stock = models.PositiveIntegerField(default=1)
+
+    def __str__(self) -> str:
+        return self.name or self.product.name
